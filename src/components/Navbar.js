@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   render() {
     return (
       <nav className="nav">
         <div className="left-div">
-          <img
-            src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
-            alt="logo"
-          />
+          <Link to="/">
+            <img
+              src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
+              alt="logo"
+            />
+          </Link>
         </div>
         <div className="search-container">
           <img
@@ -18,7 +21,7 @@ class Navbar extends Component {
           />
           <input placeholder="Search" />
 
-          <div className="search-results">
+          {/* <div className="search-results">
             <ul>
               <li className="search-results-row">
                 <img
@@ -35,7 +38,7 @@ class Navbar extends Component {
                 <span>John Doe</span>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="right-nav">
           <div className="user">
@@ -48,9 +51,15 @@ class Navbar extends Component {
           </div>
           <div className="nav-links">
             <ul>
-              <li>Log in</li>
-              <li>Log out</li>
-              <li>Register</li>
+              <li>
+                <Link to="login">Log in </Link>
+              </li>
+              <li>
+                <Link to="logout">Log Out</Link>
+              </li>
+              <li>
+                <Link to="signup">Sign Up</Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -1,22 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { fetchPosts } from '../actions/posts';
-import { PostsList } from './';
-import { Navbar } from './';
+import { Navbar, Login, Signup, Home, Page404 } from './';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
   }
-
   render() {
     const { posts } = this.props;
     return (
-      <div>
-        <Navbar />
-        <PostsList posts={posts} />
-      </div>
+      <Router>
+        <div>
+          <Navbar />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
+            />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route component={Page404} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
