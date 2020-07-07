@@ -11,7 +11,7 @@ const initialAuthState = {
   inProgress: false,
 };
 
-export default function auth(state = initialAuthState) {
+export default function auth(state = initialAuthState, action) {
   switch (action.type) {
     case LOGIN_START: {
       return {
@@ -35,6 +35,9 @@ export default function auth(state = initialAuthState) {
         inProgress: false,
         error: action.error,
       };
+    }
+    default: {
+      return state;
     }
   }
 }

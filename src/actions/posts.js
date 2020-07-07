@@ -1,4 +1,5 @@
 import { UPDATE_POSTS } from './actionsType';
+import { API_URLS } from '../helpers/urls';
 
 function updatePosts(posts) {
   return {
@@ -9,7 +10,7 @@ function updatePosts(posts) {
 
 export function fetchPosts() {
   return (dispatch) => {
-    const url = 'http://localhost:8000/api/v1/posts?page=1&limit=5';
+    const url = API_URLS.fetchPost(1, 5);
     fetch(url)
       .then((response) => {
         return response.json();
