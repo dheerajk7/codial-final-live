@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../actions/auth';
 
 class Navbar extends Component {
+  logOut = () => {
+    localStorage.removeItem('token');
+    this.props.dispatch(logout());
+  };
+
   render() {
+    const { isLoggedIn, user } = this.props.auth;
     return (
       <nav className="nav">
         <div className="left-div">
@@ -41,26 +49,32 @@ class Navbar extends Component {
           </div> */}
         </div>
         <div className="right-nav">
-          <div className="user">
-            <img
-              src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-              alt="user-dp"
-              id="user-dp"
-            />
-            <span>John Doe</span>
-          </div>
+          {isLoggedIn && (
+            <div className="user">
+              <img
+                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                alt="user-dp"
+                id="user-dp"
+              />
+              <span>{user.name}</span>
+            </div>
+          )}
+
           <div className="nav-links">
-            <ul>
-              <li>
-                <Link to="login">Log in </Link>
-              </li>
-              <li>
-                <Link to="logout">Log Out</Link>
-              </li>
-              <li>
-                <Link to="signup">Sign Up</Link>
-              </li>
-            </ul>
+            {!isLoggedIn ? (
+              <ul>
+                <li>
+                  <Link to="login">Log in </Link>
+                </li>
+                <li>
+                  <Link to="signup">Sign Up</Link>
+                </li>
+              </ul>
+            ) : (
+              <ul>
+                <li onClick={this.logOut}>Log Out</li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>
@@ -68,4 +82,9 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+export default connect(mapStateToProps)(Navbar);
