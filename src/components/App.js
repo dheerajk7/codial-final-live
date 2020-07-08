@@ -1,7 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions/posts';
-import { Navbar, Login, Signup, Home, Page404 } from './';
+import {
+  Navbar,
+  Login,
+  Signup,
+  Home,
+  Page404,
+  Setting,
+  PrivateRoute,
+} from './';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
@@ -22,7 +30,7 @@ class App extends React.Component {
     }
   }
   render() {
-    const { posts } = this.props;
+    const { posts, auth } = this.props;
     return (
       <Router>
         <div>
@@ -37,6 +45,11 @@ class App extends React.Component {
             />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <PrivateRoute
+              path="/setting"
+              component={Setting}
+              isLoggedIn={auth.isLoggedIn}
+            />
             <Route component={Page404} />
           </Switch>
         </div>
@@ -47,6 +60,7 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     posts: state.posts.posts,
   };
 }
